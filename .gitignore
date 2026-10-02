@@ -1,0 +1,29 @@
+$ignore = @(
+  '',
+  '# Test / cache artifacts',
+  '.pytest_cache/',
+  '.ruff_cache/',
+  '.mypy_cache/',
+  '.coverage',
+  'htmlcov/',
+  '',
+  '# Editors and OS',
+  '.vscode/',
+  '.idea/',
+  '*.swp',
+  'Thumbs.db',
+  '.DS_Store',
+  '',
+  '# Local environment / secrets',
+  '.env',
+  '.env.*',
+  '!.env.example'
+)
+$path = Join-Path (Get-Location) '.gitignore'
+$existing = Get-Content -LiteralPath $path -ErrorAction SilentlyContinue
+foreach ($line in $ignore) {
+  if ($line -eq '' -or ($existing -notcontains $line)) {
+    Add-Content -LiteralPath $path -Value $line
+  }
+}
+Get-Content -LiteralPath $path
